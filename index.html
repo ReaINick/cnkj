@@ -3,17 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email List Manager</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Email Subscription</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; }
+        form { display: flex; flex-direction: column; }
+        input, button { margin: 10px 0; padding: 10px; }
+    </style>
 </head>
 <body>
-    <div id="email-list-manager">
-        <h1>Email List Manager</h1>
-        <input type="text" id="new-email" placeholder="Add new email">
-        <button id="add-email">Add</button>
-        <button id="send-all">Send to All</button>
-        <ul id="email-list"></ul>
-    </div>
-    <script src="script.js"></script>
+    <h1>Subscribe to Our Mailing List</h1>
+    <form id="emailForm">
+        <input type="email" id="email" required placeholder="Enter your email">
+        <button type="submit">Subscribe</button>
+    </form>
+    <div id="message"></div>
+
+    <script>
+        document.getElementById('emailForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const response = await fetch('/subscribe', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email })
+            });
+            const result = await response.json();
+            document.getElementById('message').textContent = result.message;
+        });
+    </script>
 </body>
 </html>
