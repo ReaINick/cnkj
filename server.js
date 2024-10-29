@@ -9,9 +9,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Set up OAuth 2.0 client
 const oauth2Client = new OAuth2Client(
-    'YOUR_CLIENT_ID',
-    'YOUR_CLIENT_SECRET',
-    'YOUR_REDIRECT_URI'
+    '853592900484-hm2rjb8h8unl49svj2onbmgaetjq33p6.apps.googleusercontent.com',
+    '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',
+    'https://www.ytvideo.free.nf/'
 );
 
 // Set up Google Sheets API
@@ -41,3 +41,30 @@ app.post('/subscribe', async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+const { OAuth2Client } = require('google-auth-library');
+
+const oauth2Client = new OAuth2Client(
+    '853592900484-hm2rjb8h8unl49svj2onbmgaetjq33p6.apps.googleusercontent.com',
+    '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',
+    'https://www.ytvideo.free.nf/oauth2callback'
+);
+
+const scopes = [
+    'https://www.googleapis.com/auth/spreadsheets'
+];
+
+const url = oauth2Client.generateAuthUrl({
+    access_type: 'offline',
+    scope: scopes
+});
+
+console.log('Authorize this app by visiting this url:', url);
+
+const { tokens } = await oauth2Client.getToken(code);
+console.log(tokens.refresh_token);
+
+oauth2Client.setCredentials({
+    refresh_token: 'YOUR_REFRESH_TOKEN'
+});
+
