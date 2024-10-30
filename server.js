@@ -36,7 +36,7 @@ app.post('/subscribe', async (req, res) => {
     const { email } = req.body;
     try {
         await sheets.spreadsheets.values.append({
-            spreadsheetId: process.env.SPREADSHEET_ID,
+            spreadsheetId: process.env.1wA7UQl4CbaUUPrL34lFMHntoHvEQ-3NgPdthKyGSZ5w,
             range: 'Sheet1!A:A',
             valueInputOption: 'RAW',
             insertDataOption: 'INSERT_ROWS',
